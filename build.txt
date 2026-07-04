@@ -1,0 +1,4 @@
+displayName = Radiant Jewel Post Moon Lord
+author = rilstrats
+version = 0.1
+modReferences = MagicStorage,CalamityMod
