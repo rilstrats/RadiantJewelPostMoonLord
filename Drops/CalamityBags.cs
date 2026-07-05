@@ -6,9 +6,10 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace RadiantJewelPostMoonLord.Content.Items
+namespace RadiantJewelPostMoonLord.Drops
 {
-    public class RadiantJewelBag : MagicStorage.Items.RadiantJewelBag
+    [ExtendsFromMod("CalamityMod")]
+    public class CalamityBags : GlobalItem
     {
         private static readonly HashSet<int> ids =
         [
