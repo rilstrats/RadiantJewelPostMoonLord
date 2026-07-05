@@ -6,9 +6,10 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace RadiantJewelPostMoonLord.Content.Items
+namespace RadiantJewelPostMoonLord.Drops
 {
-    public class RadiantJewelDrop : MagicStorage.Items.RadiantJewelDrop
+    [ExtendsFromMod("CalamityMod")]
+    public class CalamityBosses : GlobalNPC
     {
         private static readonly HashSet<int> ids =
         [
@@ -65,7 +66,7 @@ namespace RadiantJewelPostMoonLord.Content.Items
                             maximumDropped: 1,
                             chanceNumerator: 1
                         )
-                        .WithPityDrops(PITY_DROP_STRENGTH)
+                        .WithPityDrops(MagicStorage.Items.RadiantJewelDrop.PITY_DROP_STRENGTH)
                 );
             }
 
@@ -85,7 +86,7 @@ namespace RadiantJewelPostMoonLord.Content.Items
                             maximumDropped: 1,
                             chanceNumerator: 1
                         )
-                        .WithPityDrops(PITY_DROP_STRENGTH)
+                        .WithPityDrops(MagicStorage.Items.RadiantJewelDrop.PITY_DROP_STRENGTH)
                 );
                 npcLoot.Add(rule);
             }
@@ -106,7 +107,7 @@ namespace RadiantJewelPostMoonLord.Content.Items
                             maximumDropped: 1,
                             chanceNumerator: 1
                         )
-                        .WithPityDrops(PITY_DROP_STRENGTH)
+                        .WithPityDrops(MagicStorage.Items.RadiantJewelDrop.PITY_DROP_STRENGTH)
                 );
                 npcLoot.Add(rule);
             }
@@ -126,7 +127,7 @@ namespace RadiantJewelPostMoonLord.Content.Items
                             maximumDropped: 1,
                             chanceNumerator: 1
                         )
-                        .WithPityDrops(PITY_DROP_STRENGTH)
+                        .WithPityDrops(MagicStorage.Items.RadiantJewelDrop.PITY_DROP_STRENGTH)
                 );
                 npcLoot.Add(
                     ItemDropRule
@@ -138,7 +139,7 @@ namespace RadiantJewelPostMoonLord.Content.Items
                             maximumDropped: 1,
                             chanceNumerator: 9
                         )
-                        .WithPityDrops(PITY_DROP_STRENGTH)
+                        .WithPityDrops(MagicStorage.Items.RadiantJewelDrop.PITY_DROP_STRENGTH)
                 );
                 npcLoot.Add(
                     ItemDropRule
@@ -150,7 +151,7 @@ namespace RadiantJewelPostMoonLord.Content.Items
                             maximumDropped: 1,
                             chanceNumerator: 1
                         )
-                        .WithPityDrops(PITY_DROP_STRENGTH)
+                        .WithPityDrops(MagicStorage.Items.RadiantJewelDrop.PITY_DROP_STRENGTH)
                 );
             }
         }
