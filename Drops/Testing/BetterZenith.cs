@@ -4,7 +4,7 @@
 // using Terraria.ID;
 // using Terraria.ModLoader;
 //
-// namespace RadiantJewelPostMoonLord.Content.Items
+// namespace RadiantJewelPostMoonLord.Drops.Testing
 // {
 //     public class BetterZenith : GlobalItem
 //     {
