@@ -1,6 +1,6 @@
 displayName = Radiant Jewel Post-Moon Lord
 author = rilstrats
-version = 0.1.0
+version = 0.1.1
 modReferences = MagicStorage
 weakReferences = CalamityMod
 homepage = https://github.com/rilstrats/RadiantJewelPostMoonLord
