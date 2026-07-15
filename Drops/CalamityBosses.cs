@@ -11,32 +11,58 @@ namespace RadiantJewelPostMoonLord.Drops
     [ExtendsFromMod("CalamityMod")]
     public class CalamityBosses : GlobalNPC
     {
-        private static readonly HashSet<int> ids =
-        [
-            ModContent.NPCType<CalamityMod.NPCs.Providence.Providence>(),
-            ModContent.NPCType<CalamityMod.NPCs.StormWeaver.StormWeaverHead>(),
-            ModContent.NPCType<CalamityMod.NPCs.CeaselessVoid.CeaselessVoid>(),
-            ModContent.NPCType<CalamityMod.NPCs.Signus.Signus>(),
-            ModContent.NPCType<CalamityMod.NPCs.Polterghast.Polterghast>(),
-            ModContent.NPCType<CalamityMod.NPCs.OldDuke.OldDuke>(),
-            ModContent.NPCType<CalamityMod.NPCs.DevourerofGods.DevourerofGodsHead>(),
-            ModContent.NPCType<CalamityMod.NPCs.Yharon.Yharon>(),
-            ModContent.NPCType<CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas>(),
-        ];
+        private static readonly Dictionary<int, CalamityBossType> bossIdToType = new()
+        {
+            {
+                ModContent.NPCType<CalamityMod.NPCs.Providence.Providence>(),
+                CalamityBossType.Default
+            },
+            {
+                ModContent.NPCType<CalamityMod.NPCs.StormWeaver.StormWeaverHead>(),
+                CalamityBossType.Default
+            },
+            {
+                ModContent.NPCType<CalamityMod.NPCs.CeaselessVoid.CeaselessVoid>(),
+                CalamityBossType.Default
+            },
+            { ModContent.NPCType<CalamityMod.NPCs.Signus.Signus>(), CalamityBossType.Default },
+            {
+                ModContent.NPCType<CalamityMod.NPCs.Polterghast.Polterghast>(),
+                CalamityBossType.Default
+            },
+            { ModContent.NPCType<CalamityMod.NPCs.OldDuke.OldDuke>(), CalamityBossType.Default },
+            {
+                ModContent.NPCType<CalamityMod.NPCs.DevourerofGods.DevourerofGodsHead>(),
+                CalamityBossType.Default
+            },
+            { ModContent.NPCType<CalamityMod.NPCs.Yharon.Yharon>(), CalamityBossType.Default },
+            {
+                ModContent.NPCType<CalamityMod.NPCs.SupremeCalamitas.SupremeCalamitas>(),
+                CalamityBossType.Default
+            },
+            {
+                ModContent.NPCType<CalamityMod.NPCs.ExoMechs.Ares.AresBody>(),
+                CalamityBossType.ExoMech
+            },
+            {
+                ModContent.NPCType<CalamityMod.NPCs.ExoMechs.Thanatos.ThanatosHead>(),
+                CalamityBossType.ExoMech
+            },
+            {
+                // Artemis doesn't drop loot, just Apollo
+                ModContent.NPCType<CalamityMod.NPCs.ExoMechs.Apollo.Apollo>(),
+                CalamityBossType.ExoMech
+            },
+            {
+                ModContent.NPCType<CalamityMod.NPCs.ProfanedGuardians.ProfanedGuardianCommander>(),
+                CalamityBossType.NoBag
+            },
+            {
+                ModContent.NPCType<CalamityMod.NPCs.Ravager.RavagerBody>(),
+                CalamityBossType.Ravager
+            },
+        };
 
-        private static readonly HashSet<int> exoMechIds =
-        [
-            ModContent.NPCType<CalamityMod.NPCs.ExoMechs.Ares.AresBody>(),
-            ModContent.NPCType<CalamityMod.NPCs.ExoMechs.Thanatos.ThanatosHead>(),
-            ModContent.NPCType<CalamityMod.NPCs.ExoMechs.Apollo.Apollo>(),
-            // ModContent.NPCType<CalamityMod.NPCs.ExoMechs.Artemis.Artemis>(),
-            // Artemis doesn't handle loot dropping, just Apollo
-        ];
-
-        private static readonly HashSet<int> noBagIds =
-        [
-            ModContent.NPCType<CalamityMod.NPCs.ProfanedGuardians.ProfanedGuardianCommander>(),
-        ];
 
         public override bool AppliesToEntity(NPC entity, bool lateInstantiation)
         {
@@ -45,15 +71,12 @@ namespace RadiantJewelPostMoonLord.Drops
                 return false;
             }
 
-            return ids.Contains(entity.type)
-                || exoMechIds.Contains(entity.type)
-                || noBagIds.Contains(entity.type)
-                || entity.type == ModContent.NPCType<CalamityMod.NPCs.Ravager.RavagerBody>();
+            return bossIdToType.ContainsKey(entity.type);
         }
 
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
-            if (ids.Contains(npc.type))
+            if (bossIdToType[npc.type] == CalamityBossType.Default)
             {
                 //10% chance to drop 1 item in Normal Mode
                 npcLoot.Add(
@@ -70,7 +93,7 @@ namespace RadiantJewelPostMoonLord.Drops
                 );
             }
 
-            if (exoMechIds.Contains(npc.type))
+            if (bossIdToType[npc.type] == CalamityBossType.ExoMech)
             {
                 //10% chance to drop 1 item in Normal Mode
                 LeadingConditionRule rule = npcLoot.DefineConditionalDropSet(
@@ -91,7 +114,7 @@ namespace RadiantJewelPostMoonLord.Drops
                 npcLoot.Add(rule);
             }
 
-            if (npc.type == ModContent.NPCType<CalamityMod.NPCs.Ravager.RavagerBody>())
+            if (bossIdToType[npc.type] == CalamityBossType.Ravager)
             {
                 //10% chance to drop 1 item in Normal Mode
                 LeadingConditionRule rule = new(
@@ -112,7 +135,7 @@ namespace RadiantJewelPostMoonLord.Drops
                 npcLoot.Add(rule);
             }
 
-            if (noBagIds.Contains(npc.type))
+            if (bossIdToType[npc.type] == CalamityBossType.NoBag)
             {
                 //10% chance to drop 1 item in Normal Mode
                 //18% chance to drop 1 item in Expert Mode
@@ -155,5 +178,32 @@ namespace RadiantJewelPostMoonLord.Drops
                 );
             }
         }
+    }
+
+    public enum CalamityBossType
+    {
+        /// <summary>
+        /// Bosses with default behavior that can drop radiant jewel if in classic mode
+        /// </summary>
+        Default,
+
+        /// <summary>
+        /// Exo Mechs can drop radiant jewel if:
+        /// - death of last boss (like twins)
+        /// - Classic mode
+        /// </summary>
+        ExoMech,
+
+        /// <summary>
+        /// Bosses that never drop a boss bag and can always drop radiant jewel
+        /// </summary>
+        NoBag,
+
+        /// <summary>
+        /// Ravager can drop radiant jewel if:
+        /// - Providence has been defated
+        /// - Classic mode
+        /// </summary>
+        Ravager,
     }
 }
